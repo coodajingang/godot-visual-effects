@@ -1,0 +1,82 @@
+[gd_resource type="MonetizationConfig" load_steps=8 format=3 uid="uid://mp1vqs1spp1hr"]
+
+[ext_resource type="Script" path="res://monetization/monetization_config.gd" id="1"]
+[ext_resource type="Script" path="res://monetization/ad_placement_config.gd" id="2"]
+[ext_resource type="Script" path="res://monetization/in_app_product_config.gd" id="3"]
+[ext_resource type="Script" path="res://monetization/store_item_config.gd" id="4"]
+
+[sub_resource type="AdPlacementConfig" id="AdPlacementConfig_rewarded"]
+resource_name = "RewardedDailyChest"
+script = ExtResource("2")
+placement_id = "rewarded_daily_chest"
+display_name = "Rewarded Daily Chest"
+placement_type = "rewarded"
+provider = "RewardedAdsNetwork"
+cooldown_minutes = 2.0
+reward_currency = "Gems"
+reward_amount = 20
+
+[sub_resource type="AdPlacementConfig" id="AdPlacementConfig_interstitial"]
+resource_name = "LevelCompleteInterstitial"
+script = ExtResource("2")
+placement_id = "level_complete_interstitial"
+display_name = "Level Complete Interstitial"
+placement_type = "interstitial"
+provider = "InterstitialNetwork"
+cooldown_minutes = 1.5
+
+[sub_resource type="AdPlacementConfig" id="AdPlacementConfig_banner"]
+resource_name = "MainMenuBanner"
+script = ExtResource("2")
+placement_id = "main_menu_banner"
+display_name = "Main Menu Banner"
+placement_type = "banner"
+provider = "BannerNetwork"
+cooldown_minutes = 0.0
+
+[sub_resource type="InAppProductConfig" id="Product_small_pack"]
+resource_name = "CoinsSmallPack"
+script = ExtResource("3")
+product_id = "coins_small_pack"
+display_name = "Small Coin Pack"
+description = "Adds 500 coins to your wallet instantly."
+price = 2.49
+currency = "USD"
+consumable = true
+reward_currency = "Coins"
+reward_amount = 500
+
+[sub_resource type="InAppProductConfig" id="Product_premium_upgrade"]
+resource_name = "PremiumUpgrade"
+script = ExtResource("3")
+product_id = "premium_upgrade"
+display_name = "Premium Upgrade"
+description = "Removes ads and unlocks the premium track."
+price = 9.99
+currency = "USD"
+consumable = false
+
+[sub_resource type="StoreItemConfig" id="Store_skin"]
+resource_name = "StarHeroSkin"
+script = ExtResource("4")
+item_id = "skin_star_hero"
+display_name = "Star Hero Skin"
+description = "A cosmetic skin purchased with gems."
+price = 120
+currency = "Gems"
+
+[sub_resource type="StoreItemConfig" id="Store_boost"]
+resource_name = "XpBoost3x"
+script = ExtResource("4")
+item_id = "xp_boost_3x"
+display_name = "3x XP Boost (30 min)"
+description = "Spend coins to triple experience gain for 30 minutes."
+price = 750
+currency = "Coins"
+
+[resource]
+script = ExtResource("1")
+profile_name = "Demo Profile"
+ad_placements = [SubResource("AdPlacementConfig_rewarded"), SubResource("AdPlacementConfig_interstitial"), SubResource("AdPlacementConfig_banner")]
+in_app_products = [SubResource("Product_small_pack"), SubResource("Product_premium_upgrade")]
+store_items = [SubResource("Store_skin"), SubResource("Store_boost")]
