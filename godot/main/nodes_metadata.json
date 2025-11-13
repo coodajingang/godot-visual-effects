@@ -7,26 +7,28 @@
       "FireBall",
       "GhostTrail",
       "LaserBeam",
-	  "Lightning",
+      "Lightning",
       "Shockwave",
       "StarField",
-      "Trail2D"
-    ],
-    "3d": [
+      "Trail2D",
+      "MonetizationSystem"
+      ],
+      "3d": [
       "Slash3D",
-	  "MuzzleFlash3D",
-	  "Vines3D",
-	  "Flames3D",
-	  "FireBurst3D",
-	  "StylizedExplosion3D",
-	  "GroundDestruction3D"
-    ]
-  },
-  "search_terms": {
-    "Lights": ["DirectionalLight", "BakedLightmap", "OmniLight", "SpotLight", "GIProbe"],
-    "Button": ["CheckBox", "CheckButton", "OptionButton"],
-    "HBoxContainer": ["VBoxContainer"],
-    "ProgressBar": ["TextureProgress"],
-    "AudioStreamPlayer": ["AudioStreamPlayer2D", "AudioStreamPlayer3D"]
-  }
-}
+        "MuzzleFlash3D",
+        "Vines3D",
+        "Flames3D",
+        "FireBurst3D",
+        "StylizedExplosion3D",
+        "GroundDestruction3D"
+      ]
+      },
+      "search_terms": {
+      "Lights": ["DirectionalLight", "BakedLightmap", "OmniLight", "SpotLight", "GIProbe"],
+      "Button": ["CheckBox", "CheckButton", "OptionButton"],
+      "HBoxContainer": ["VBoxContainer"],
+      "ProgressBar": ["TextureProgress"],
+      "AudioStreamPlayer": ["AudioStreamPlayer2D", "AudioStreamPlayer3D"],
+      "MonetizationSystem": ["Monetization", "Ads", "IAP", "Store"]
+      }
+      }

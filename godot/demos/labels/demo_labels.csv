@@ -16,3 +16,4 @@ flames3d_flames3ddemo,"With multiple layers of scrolling textures on a particle,
 fireburst3d_fireburst3ddemo,"Using warping and four texture variations we can create a fluid fire effect that doesn't look repetitive. Great for dragons and flame throwers."
 stylizedexplosion3d_stylizedexplosion3ddemo,"While particles and billboard are often used for explosions, another approach that offers great control is a custom mesh."
 grounddestruction3d_grounddestruction3ddemo,"With this effect we combine vertex shaders, erosion effects and particles for a complex ground destruction effect."
+monetizationsystem_monetizationdemo,"Configurable ad, in-app purchase, and store simulation with reusable components."
