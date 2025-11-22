@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://brsgjjpgjk81aysi"]
+
+[ext_resource type="Script" path="res://addons/universal_framework/game/leveling_demo.gd"]
+
+[node name="LevelingDemo" type="Node"]
+script = ExtResource("1")
