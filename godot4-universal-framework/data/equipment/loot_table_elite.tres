@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="LootTable" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/loot_table.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+table_id = "elite_enemies"
+loot_entries = Array[Dictionary]([{
+"item_id": "flaming_blade",
+"max_level": 5,
+"min_level": 1,
+"weight": 0.25
+}, {
+"item_id": "dragon_scale_armor",
+"max_level": 5,
+"min_level": 1,
+"weight": 0.2
+}, {
+"item_id": "lucky_coin",
+"max_level": 5,
+"min_level": 1,
+"weight": 0.35
+}, {
+"item_id": "phoenix_feather",
+"max_level": 4,
+"min_level": 1,
+"weight": 0.15
+}, {
+"item_id": "legendary_excalibur",
+"max_level": 3,
+"min_level": 1,
+"weight": 0.05
+}])

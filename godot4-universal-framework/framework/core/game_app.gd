@@ -13,11 +13,13 @@ const SocialKit = preload("res://addons/universal_framework/social/social_kit.gd
 const NetKit = preload("res://addons/universal_framework/net/net_kit.gd")
 const LogKit = preload("res://addons/universal_framework/log/log_kit.gd")
 const GameKit = preload("res://addons/universal_framework/game/game_kit.gd")
+const EquipmentManager = preload("res://game/equipment_manager.gd")
 
 var event_bus: EventBus
 var backend_service: MockBackendService
 var backend_adapter
 var localization_manager: LocalizationManager
+var equipment_manager: EquipmentManager
 var modules: Dictionary = {}
 
 var config: Dictionary = {
@@ -31,6 +33,7 @@ func _ready() -> void:
     _initialize_runtime()
     _initialize_backend()
     _initialize_modules()
+    _initialize_equipment()
     event_bus.publish("app.initialized", {
         "timestamp": Time.get_datetime_string_from_system(),
         "backend": config.get("backend", "supabase")
@@ -85,6 +88,11 @@ func _initialize_modules() -> void:
     _register_module("log", LogKit.new())
     _register_module("game", GameKit.new())
 
+func _initialize_equipment() -> void:
+    equipment_manager = EquipmentManager.new()
+    equipment_manager.name = "EquipmentManager"
+    add_child(equipment_manager)
+
 func _register_module(name_key: String, module: BaseModule) -> void:
     module.name = name_key.capitalize() + "Module"
     add_child(module)
@@ -114,3 +122,6 @@ func get_log():
 
 func get_game():
     return modules.get("game")
+
+func get_equipment_manager():
+    return equipment_manager
