@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://2gokaekfh5q2" path="res://assets/staff.svg" id="1"]
 [ext_resource type="Environment" uid="uid://c8ol6uwdees61" path="res://assets/2d_environment.tres" id="2"]
 [ext_resource type="Texture2D" uid="uid://ck4bdea7gygiy" path="res://assets/sparkle.png" id="3"]
-[ext_resource type="Script" path="res://fire_ball/fire_ball_spawner.gd" id="4"]
+[ext_resource type="Script" uid="uid://b3mcmscuy1sft" path="res://fire_ball/fire_ball_spawner.gd" id="4"]
 
 [sub_resource type="GDScript" id="1"]
 script/source = "extends Node2D
@@ -194,15 +194,15 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_swi6v"]
 _data = {
-"Cast": SubResource("9"),
-"Rest": SubResource("10")
+&"Cast": SubResource("9"),
+&"Rest": SubResource("10")
 }
 
 [sub_resource type="GDScript" id="11"]
 script/source = "extends Marker2D
 
 
-@export var asteroid_scene: PackedScene = preload(\"res://FireBall/FlyingAsteroid.tscn\")
+@export var asteroid_scene: PackedScene = preload(\"res://fire_ball/flying_asteroid.tscn\")
 
 
 func spawn() -> void:
@@ -256,7 +256,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5glyw"]
 _data = {
-"Idle": SubResource("13")
+&"Idle": SubResource("13")
 }
 
 [node name="FireBallDemo" type="Node2D"]
@@ -279,9 +279,9 @@ self_modulate = Color(1.11, 1.11, 1.11, 1)
 position = Vector2(160, -0.000358582)
 rotation = 1.57079
 amount = 32
-process_material = SubResource("6")
 texture = ExtResource("3")
 randomness = 1.0
+process_material = SubResource("6")
 
 [node name="FireBallSpawner" type="Marker2D" parent="FireStaff/Sprite2D/CoreSparkles"]
 position = Vector2(-0.000648499, -2)
@@ -298,7 +298,7 @@ show_percentage = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="FireStaff"]
 libraries = {
-"": SubResource("AnimationLibrary_swi6v")
+&"": SubResource("AnimationLibrary_swi6v")
 }
 
 [node name="AsteroidSpawner" type="Marker2D" parent="."]
@@ -313,7 +313,7 @@ max_wait_time = 4.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AsteroidSpawner"]
 libraries = {
-"": SubResource("AnimationLibrary_5glyw")
+&"": SubResource("AnimationLibrary_5glyw")
 }
 autoplay = "Idle"
 

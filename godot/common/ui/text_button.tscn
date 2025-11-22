@@ -1,4 +1,4 @@
-[gd_scene format=2]
+[gd_scene format=3 uid="uid://b8gp8o40ww2re"]
 
 [node name="TextButton" type="Button"]
 offset_right = 318.0

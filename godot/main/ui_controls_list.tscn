@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://cjj058exws11l" path="res://common/ui/ui_theme.tres" id="1"]
 [ext_resource type="StyleBox" path="res://main/keyboard_key_panel.tres" id="2"]
 [ext_resource type="FontFile" path="res://common/ui/fonts/subtitle_font.tres" id="3"]
-[ext_resource type="Script" path="res://main/ui_controls_list.gd" id="4"]
+[ext_resource type="Script" uid="uid://ch4wmgbrv3lc3" path="res://main/ui_controls_list.gd" id="4"]
 
 [node name="UIControlsList" type="HBoxContainer"]
 offset_left = 32.0

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dqx3p8jtaixrm"]
 
-[ext_resource type="Script" path="res://main/demo_list.gd" id="1"]
+[ext_resource type="Script" uid="uid://dxy7lvr3e1p17" path="res://main/demo_list.gd" id="1"]
 
 [node name="DemoList" type="ScrollContainer"]
 offset_left = 16.0

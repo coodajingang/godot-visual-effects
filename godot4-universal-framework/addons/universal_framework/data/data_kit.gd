@@ -24,8 +24,17 @@ func get_profile() -> Dictionary:
 func synchronize_cloud_save() -> Dictionary:
     cloud_sync_started.emit()
     event_bus.publish("datakit.cloud_sync_started")
+    
+    var equipment_manager = game_app.get_equipment_manager()
+    if equipment_manager:
+        local_cache["cloud_save"]["equipment"] = equipment_manager.serialize()
+    
     var remote_snapshot = await backend_adapter.fetch_cloud_save()
     local_cache["cloud_save"] = _merge_save(remote_snapshot)
+    
+    if equipment_manager and local_cache["cloud_save"].has("equipment"):
+        equipment_manager.deserialize(local_cache["cloud_save"]["equipment"])
+    
     var push_result = await backend_adapter.push_cloud_save(local_cache["cloud_save"])
     var snapshot = push_result.get("snapshot", local_cache["cloud_save"])
     local_cache["cloud_save"] = snapshot

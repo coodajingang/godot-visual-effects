@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://bwryd6q8osisg"]
 
 [ext_resource type="Texture2D" uid="uid://dardstrfbsior" path="res://fire_burst_3d/fire_burst.png" id="1"]
-[ext_resource type="Shader" path="res://fire_burst_3d/fire_burst.gdshader" id="2"]
+[ext_resource type="Shader" uid="uid://ch2761j4ota8f" path="res://fire_burst_3d/fire_burst.gdshader" id="2"]
 
 [sub_resource type="Gradient" id="2"]
 offsets = PackedFloat32Array(0.00440529, 0.265086, 0.676724, 1)
@@ -14,13 +14,13 @@ gradient = SubResource("2")
 render_priority = 0
 shader = ExtResource("2")
 shader_parameter/albedo = Color(2, 2, 2, 1)
+shader_parameter/fire_gradient = SubResource("3")
+shader_parameter/texture_pattern = ExtResource("1")
 shader_parameter/particles_h_frames = 2
 shader_parameter/particles_v_frames = 2
 shader_parameter/warp_strength = 0.025
 shader_parameter/warp_speed = 8.0
 shader_parameter/warp_scale = 0.5
-shader_parameter/fire_gradient = SubResource("3")
-shader_parameter/texture_pattern = ExtResource("1")
 
 [sub_resource type="Gradient" id="6"]
 offsets = PackedFloat32Array(0, 0.995327)

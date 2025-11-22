@@ -1,7 +1,7 @@
 [gd_scene load_steps=21 format=3 uid="uid://b34vq08qclndj"]
 
 [ext_resource type="PackedScene" uid="uid://bd6t5gbm2yi46" path="res://trail/ship_with_trail.tscn" id="1"]
-[ext_resource type="PackedScene" path="res://star_field/star_field_background.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://bkvpya4h3ihll" path="res://star_field/star_field_background.tscn" id="3"]
 [ext_resource type="Texture2D" uid="uid://b1hj1aci1wep4" path="res://assets/planets.svg" id="4"]
 [ext_resource type="Texture2D" uid="uid://dbch3ucxyq15y" path="res://assets/asteroid.svg" id="5"]
 
@@ -24,7 +24,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hko16"]
 _data = {
-"spin": SubResource("1")
+&"spin": SubResource("1")
 }
 
 [sub_resource type="Animation" id="2"]
@@ -46,7 +46,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_flce4"]
 _data = {
-"spin": SubResource("2")
+&"spin": SubResource("2")
 }
 
 [sub_resource type="Animation" id="3"]
@@ -68,7 +68,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8n4ac"]
 _data = {
-"spin": SubResource("3")
+&"spin": SubResource("3")
 }
 
 [sub_resource type="Animation" id="4"]
@@ -90,7 +90,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rombp"]
 _data = {
-"spin": SubResource("4")
+&"spin": SubResource("4")
 }
 
 [sub_resource type="Animation" id="5"]
@@ -112,7 +112,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lcmr3"]
 _data = {
-"spin": SubResource("5")
+&"spin": SubResource("5")
 }
 
 [sub_resource type="Animation" id="6"]
@@ -134,7 +134,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5rv6e"]
 _data = {
-"spin": SubResource("6")
+&"spin": SubResource("6")
 }
 
 [sub_resource type="Animation" id="7"]
@@ -156,7 +156,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tpkvy"]
 _data = {
-"spin": SubResource("7")
+&"spin": SubResource("7")
 }
 
 [sub_resource type="Animation" id="8"]
@@ -178,7 +178,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6ivc6"]
 _data = {
-"spin": SubResource("8")
+&"spin": SubResource("8")
 }
 
 [node name="Trail2DDemo" type="Node"]

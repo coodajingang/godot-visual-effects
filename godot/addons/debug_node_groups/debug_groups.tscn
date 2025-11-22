@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cqka6ri3pjveu"]
 
-[ext_resource type="Script" path="res://addons/debug_node_groups/debug_groups.gd" id="1"]
+[ext_resource type="Script" uid="uid://i2vfgn5ksdds" path="res://addons/debug_node_groups/debug_groups.gd" id="1"]
 
 [node name="DebugGroups" type="VBoxContainer"]
 anchors_preset = 15

@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://6qkrvitcxtsj"]
 
-[ext_resource type="Shader" path="res://shockwave/displacement_shader.gdshader" id="1"]
+[ext_resource type="Shader" uid="uid://damwhyv0vsb0n" path="res://shockwave/displacement_shader.gdshader" id="1"]
 [ext_resource type="PackedScene" uid="uid://c17uscqxudggb" path="res://shockwave/shockwave_world.tscn" id="2"]
 [ext_resource type="PackedScene" uid="uid://bjbpgtip2070b" path="res://shockwave/shockwave.tscn" id="3"]
 
@@ -148,7 +148,7 @@ tracks/9/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fftuw"]
 _data = {
-"Shockwave": SubResource("5")
+&"Shockwave": SubResource("5")
 }
 
 [node name="ShockwaveDemo" type="Node"]

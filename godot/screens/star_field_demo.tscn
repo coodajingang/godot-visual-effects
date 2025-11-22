@@ -32,7 +32,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tq4hc"]
 _data = {
-"spin": SubResource("2")
+&"spin": SubResource("2")
 }
 
 [sub_resource type="Animation" id="3"]
@@ -54,7 +54,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qexxv"]
 _data = {
-"spin": SubResource("3")
+&"spin": SubResource("3")
 }
 
 [sub_resource type="Animation" id="4"]
@@ -76,7 +76,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_amvkb"]
 _data = {
-"spin": SubResource("4")
+&"spin": SubResource("4")
 }
 
 [sub_resource type="Animation" id="5"]
@@ -98,7 +98,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ygnwk"]
 _data = {
-"spin": SubResource("5")
+&"spin": SubResource("5")
 }
 
 [sub_resource type="Animation" id="6"]
@@ -120,7 +120,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vlypj"]
 _data = {
-"spin": SubResource("6")
+&"spin": SubResource("6")
 }
 
 [sub_resource type="Animation" id="7"]
@@ -142,7 +142,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_sia80"]
 _data = {
-"spin": SubResource("7")
+&"spin": SubResource("7")
 }
 
 [sub_resource type="Animation" id="8"]
@@ -164,7 +164,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mddfv"]
 _data = {
-"spin": SubResource("8")
+&"spin": SubResource("8")
 }
 
 [sub_resource type="Animation" id="9"]
@@ -186,7 +186,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_57aw7"]
 _data = {
-"spin": SubResource("9")
+&"spin": SubResource("9")
 }
 
 [node name="StarFieldTest" type="Node"]

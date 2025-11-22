@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://c3o1ttqdwn30x" path="res://assets/dot.png" id="1"]
 [ext_resource type="Texture2D" uid="uid://b6plajutgc0rq" path="res://slash_3d/slash_pattern.png" id="2"]
-[ext_resource type="Shader" path="res://slash_3d/slash_3d.gdshader" id="3"]
+[ext_resource type="Shader" uid="uid://jf154jjy5dtr" path="res://slash_3d/slash_3d.gdshader" id="3"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t2f34"]
 albedo_color = Color(0.494118, 0.494118, 0.560784, 1)
@@ -75,9 +75,9 @@ height = 0.2
 render_priority = 0
 shader = ExtResource("3")
 shader_parameter/albedo = Color(1, 0.87451, 0.611765, 1)
+shader_parameter/texture_albedo = ExtResource("2")
 shader_parameter/emission_energy = 4.0
 shader_parameter/alpha_offset = 1.0
-shader_parameter/texture_albedo = ExtResource("2")
 
 [sub_resource type="QuadMesh" id="5"]
 size = Vector2(-3, 3)
@@ -197,9 +197,9 @@ tracks/3/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1)
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7h7ru"]
 _data = {
-"Attack": SubResource("13"),
-"Idle": SubResource("14"),
-"RESET": SubResource("15")
+&"Attack": SubResource("13"),
+&"Idle": SubResource("14"),
+&"RESET": SubResource("15")
 }
 
 [node name="Sword" type="Node3D"]

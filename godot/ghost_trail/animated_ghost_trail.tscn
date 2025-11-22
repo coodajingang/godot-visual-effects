@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bve1htxc8mqt8"]
 
-[ext_resource type="Script" path="res://ghost_trail/animated_ghost_trail.gd" id="3"]
+[ext_resource type="Script" uid="uid://dmrk2oyu87554" path="res://ghost_trail/animated_ghost_trail.gd" id="3"]
 [ext_resource type="Texture2D" uid="uid://le72iaus1fph" path="res://ghost_trail/alien/alien_green_stand.png" id="6"]
 
 [node name="AnimatedGhostTrail" type="Sprite2D"]

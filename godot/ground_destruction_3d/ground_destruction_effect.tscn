@@ -1,12 +1,12 @@
 [gd_scene load_steps=36 format=3 uid="uid://d72tvryhxky1"]
 
-[ext_resource type="Shader" path="res://ground_destruction_3d/rocks_vfx.gdshader" id="1"]
+[ext_resource type="Shader" uid="uid://bf3pjn5vs3yjp" path="res://ground_destruction_3d/rocks_vfx.gdshader" id="1"]
 [ext_resource type="Texture2D" uid="uid://cw3rwyfyrr5an" path="res://ground_destruction_3d/dust-alb.png" id="3"]
 [ext_resource type="Texture2D" uid="uid://cxsfbk284vpun" path="res://ground_destruction_3d/rock_chunks_alb.png" id="4"]
 [ext_resource type="Texture2D" uid="uid://4nje0r4kxesp" path="res://ground_destruction_3d/cracks.png" id="4_ja014"]
 [ext_resource type="Texture2D" uid="uid://cny6nwyaoux8y" path="res://ground_destruction_3d/rock_chunks_nor.png" id="5"]
 [ext_resource type="Texture2D" uid="uid://c0s6m6m8fdahh" path="res://ground_destruction_3d/dust-erode.png" id="6"]
-[ext_resource type="Shader" path="res://ground_destruction_3d/cracks.gdshader" id="7"]
+[ext_resource type="Shader" uid="uid://0vdudqycjspj" path="res://ground_destruction_3d/cracks.gdshader" id="7"]
 [ext_resource type="Material" uid="uid://brefvvil53m7v" path="res://ground_destruction_3d/ground_destruction_chunk_ppm.tres" id="7_rr443"]
 [ext_resource type="ArrayMesh" uid="uid://nj7jurahv6lm" path="res://ground_destruction_3d/rocks-vfx.mesh" id="8"]
 
@@ -49,6 +49,7 @@ shader_parameter/timing_curve = SubResource("CurveTexture_xybj5")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rbw3q"]
 render_priority = 0
 shader = ExtResource("7")
+shader_parameter/effect_texture = ExtResource("4_ja014")
 shader_parameter/albedo = Color(0.384314, 0.270588, 0.168627, 1)
 shader_parameter/roughness = 0.7
 shader_parameter/depth_max_layers = 32
@@ -56,7 +57,6 @@ shader_parameter/depth_min_layers = 8
 shader_parameter/depth_scale = 0.03
 shader_parameter/offset = 0.403
 shader_parameter/fade = -0.221
-shader_parameter/effect_texture = ExtResource("4_ja014")
 
 [sub_resource type="PlaneMesh" id="45"]
 size = Vector2(12, 6)
@@ -132,11 +132,11 @@ render_priority = 0
 shader = SubResource("36")
 shader_parameter/albedo = Color(1, 1, 1, 1)
 shader_parameter/transmission = Color(0.902344, 0.902344, 0.902344, 1)
-shader_parameter/proximity_fade_distance = 0.25
-shader_parameter/erosion_edge = 0.1
 shader_parameter/texture_albedo = ExtResource("3")
 shader_parameter/texture_erode = ExtResource("6")
 shader_parameter/texture_erode_timing = SubResource("25")
+shader_parameter/proximity_fade_distance = 0.25
+shader_parameter/erosion_edge = 0.1
 
 [sub_resource type="Gradient" id="39"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
@@ -358,8 +358,8 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6413o"]
 _data = {
-"Attack": SubResource("10"),
-"RESET": SubResource("11")
+&"Attack": SubResource("10"),
+&"RESET": SubResource("11")
 }
 
 [node name="GroundDestructionEffect" type="Node3D"]

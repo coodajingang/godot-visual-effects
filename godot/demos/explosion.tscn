@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://c4jvikfsk1lqq"]
 
-[ext_resource type="Script" path="res://addons/node-essential-helpers/demo_screen_slide.gd" id="1"]
-[ext_resource type="Script" path="res://addons/node-essential-helpers/scene_slideshow.gd" id="2"]
-[ext_resource type="PackedScene" path="res://screens/explosion_demo.tscn" id="3"]
+[ext_resource type="Script" uid="uid://dji6qpdrc4j28" path="res://addons/node-essential-helpers/demo_screen_slide.gd" id="1"]
+[ext_resource type="Script" uid="uid://dagepl67eb7or" path="res://addons/node-essential-helpers/scene_slideshow.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://b23r6y4cf0xda" path="res://screens/explosion_demo.tscn" id="3"]
 
 [node name="Explosion" type="Node2D"]
 script = ExtResource("2")

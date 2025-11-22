@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bqd3pj1vbf4ip"]
 
-[ext_resource type="Script" path="res://monetization/monetization_demo.gd" id="1"]
-[ext_resource type="Script" path="res://monetization/monetization_manager.gd" id="2"]
+[ext_resource type="Script" uid="uid://c221osh7pexgh" path="res://monetization/monetization_demo.gd" id="1"]
+[ext_resource type="Script" uid="uid://dpxx788xejt6e" path="res://monetization/monetization_manager.gd" id="2"]
 [ext_resource type="Theme" uid="uid://cjj058exws11l" path="res://common/ui/ui_theme.tres" id="3"]
 
 [node name="MonetizationDemo" type="Control"]
@@ -9,6 +9,8 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_default_cursor_shape = 2
 theme = ExtResource("3")
 script = ExtResource("1")
@@ -28,10 +30,10 @@ theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 32
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+custom_minimum_size = Vector2(0, 480)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_minimum_size = Vector2(0, 480)
 
 [node name="Title" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -39,30 +41,29 @@ text = "Configurable Monetization"
 vertical_alignment = 1
 
 [node name="Subtitle" type="Label" parent="MarginContainer/VBoxContainer"]
+modulate = Color(0.85, 0.9, 1, 1)
 layout_mode = 2
 text = "Simulated flows for ads, in-app purchases, and an in-game store."
 vertical_alignment = 1
-modulate = Color(0.85, 0.9, 1, 1)
 
 [node name="Sections" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-separation = 16
 
 [node name="AdPanel" type="Panel" parent="MarginContainer/VBoxContainer/Sections"]
+custom_minimum_size = Vector2(0, 250)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_minimum_size = Vector2(0, 250)
 
 [node name="PanelVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Sections/AdPanel"]
+custom_minimum_size = Vector2(0, 220)
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_minimum_size = Vector2(0, 220)
 
 [node name="PanelTitle" type="Label" parent="MarginContainer/VBoxContainer/Sections/AdPanel/PanelVBox"]
 layout_mode = 2
@@ -79,10 +80,9 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 bbcode_enabled = true
-fit_content_height = true
+text = "Select an ad placement"
 scroll_active = false
 autowrap_mode = 2
-text = "Select an ad placement"
 
 [node name="AdShowButton" type="Button" parent="MarginContainer/VBoxContainer/Sections/AdPanel/PanelVBox"]
 unique_name_in_owner = true
@@ -90,18 +90,18 @@ layout_mode = 2
 text = "Show Ad"
 
 [node name="PurchasePanel" type="Panel" parent="MarginContainer/VBoxContainer/Sections"]
+custom_minimum_size = Vector2(0, 250)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_minimum_size = Vector2(0, 250)
 
 [node name="PurchaseVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Sections/PurchasePanel"]
+custom_minimum_size = Vector2(0, 220)
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_minimum_size = Vector2(0, 220)
 
 [node name="PurchaseTitle" type="Label" parent="MarginContainer/VBoxContainer/Sections/PurchasePanel/PurchaseVBox"]
 layout_mode = 2
@@ -118,10 +118,9 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 bbcode_enabled = true
-fit_content_height = true
+text = "Select a product"
 scroll_active = false
 autowrap_mode = 2
-text = "Select a product"
 
 [node name="PurchaseButton" type="Button" parent="MarginContainer/VBoxContainer/Sections/PurchasePanel/PurchaseVBox"]
 unique_name_in_owner = true
@@ -129,18 +128,18 @@ layout_mode = 2
 text = "Purchase"
 
 [node name="StorePanel" type="Panel" parent="MarginContainer/VBoxContainer/Sections"]
+custom_minimum_size = Vector2(0, 250)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_minimum_size = Vector2(0, 250)
 
 [node name="StoreVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Sections/StorePanel"]
+custom_minimum_size = Vector2(0, 220)
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_minimum_size = Vector2(0, 220)
 
 [node name="StoreTitle" type="Label" parent="MarginContainer/VBoxContainer/Sections/StorePanel/StoreVBox"]
 layout_mode = 2
@@ -157,10 +156,9 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 bbcode_enabled = true
-fit_content_height = true
+text = "Select a store item"
 scroll_active = false
 autowrap_mode = 2
-text = "Select a store item"
 
 [node name="StoreButton" type="Button" parent="MarginContainer/VBoxContainer/Sections/StorePanel/StoreVBox"]
 unique_name_in_owner = true
@@ -168,23 +166,22 @@ layout_mode = 2
 text = "Buy With Virtual Currency"
 
 [node name="LogPanel" type="Panel" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 220)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_minimum_size = Vector2(0, 220)
 
 [node name="LogVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/LogPanel"]
+custom_minimum_size = Vector2(0, 200)
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_minimum_size = Vector2(0, 200)
 
 [node name="LogHeader" type="HBoxContainer" parent="MarginContainer/VBoxContainer/LogPanel/LogVBox"]
 layout_mode = 2
 size_flags_horizontal = 3
-separation = 12
 
 [node name="LogTitle" type="Label" parent="MarginContainer/VBoxContainer/LogPanel/LogVBox/LogHeader"]
 layout_mode = 2
@@ -207,5 +204,4 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 bbcode_enabled = true
-scroll_active = true
 autowrap_mode = 2

@@ -1,8 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://drjyf6dbmz6dd"]
+[gd_scene load_steps=4 format=3 uid="uid://drjyf6dbm06dd"]
 
-[ext_resource type="Script" path="res://addons/node-essential-helpers/demo_screen_slide.gd" id="1"]
-[ext_resource type="Script" path="res://addons/node-essential-helpers/scene_slideshow.gd" id="2"]
-[ext_resource type="PackedScene" path="res://screens/monetization_demo.tscn" id="3"]
+[ext_resource type="Script" uid="uid://dji6qpdrc4j28" path="res://addons/node-essential-helpers/demo_screen_slide.gd" id="1"]
+[ext_resource type="Script" uid="uid://dagepl67eb7or" path="res://addons/node-essential-helpers/scene_slideshow.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://bqd3pj1vbf4ip" path="res://screens/monetization_demo.tscn" id="3"]
 
 [node name="MonetizationSystem" type="Node2D"]
 script = ExtResource("2")

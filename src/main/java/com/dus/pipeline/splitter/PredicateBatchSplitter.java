@@ -1,70 +1,63 @@
 package com.dus.pipeline.splitter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.function.Predicate;
+import java.util.Map;
+import java.util.function.Function;
 
 /**
- * 条件批次拆分器
- * 根据条件将批次拆分为满足条件和不满足条件两部分
- * 
- * @param <T> 数据类型
+ * 按条件拆分列表批次的拆分器实现
+ * 根据条件函数将列表中的元素分组
+ *
+ * @param <T> 列表中元素的类型
  * @author Dus
  * @version 1.0
  */
-public class PredicateBatchSplitter<T> implements BatchSplitter<T> {
-    
-    private final Predicate<T> predicate;
-    
+public class PredicateBatchSplitter<T> implements BatchSplitter<List<T>> {
+
+    private final Function<T, String> classifier;
+
     /**
      * 构造函数
-     * 
-     * @param predicate 判断条件
-     * @throws IllegalArgumentException 如果predicate为null
+     *
+     * @param classifier 分类函数，根据元素返回分组键
      */
-    public PredicateBatchSplitter(Predicate<T> predicate) {
-        if (predicate == null) {
-            throw new IllegalArgumentException("Predicate cannot be null");
-        }
-        this.predicate = predicate;
+    public PredicateBatchSplitter(Function<T, String> classifier) {
+        this.classifier = classifier;
     }
-    
+
     @Override
-    public List<List<T>> split(List<T> batch) {
-        List<List<T>> result = new ArrayList<>();
-        
-        if (batch == null || batch.isEmpty()) {
-            return result;
+    public boolean shouldSplit(List<T> batch) {
+        if (batch == null || batch.size() <= 1) {
+            return false;
         }
-        
-        List<T> matched = new ArrayList<>();
-        List<T> unmatched = new ArrayList<>();
-        
-        for (T item : batch) {
-            if (predicate.test(item)) {
-                matched.add(item);
-            } else {
-                unmatched.add(item);
+        String firstKey = classifier.apply(batch.get(0));
+        for (int i = 1; i < batch.size(); i++) {
+            if (!classifier.apply(batch.get(i)).equals(firstKey)) {
+                return true;
             }
         }
-        
-        // 只有非空的列表才会被添加到结果中
-        if (!matched.isEmpty()) {
-            result.add(matched);
-        }
-        if (!unmatched.isEmpty()) {
-            result.add(unmatched);
-        }
-        
-        return result;
+        return false;
     }
-    
-    /**
-     * 获取判断条件
-     * 
-     * @return 判断条件
-     */
-    public Predicate<T> getPredicate() {
-        return predicate;
+
+    @Override
+    public List<List<T>> split(List<T> batch) {
+        if (batch == null || batch.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        Map<String, List<T>> grouped = new HashMap<>();
+        for (T item : batch) {
+            String key = classifier.apply(item);
+            grouped.computeIfAbsent(key, k -> new ArrayList<>()).add(item);
+        }
+
+        return new ArrayList<>(grouped.values());
+    }
+
+    @Override
+    public String name() {
+        return "PredicateBatchSplitter";
     }
 }

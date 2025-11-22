@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="LootTable" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/loot_table.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+table_id = "common_enemies"
+loot_entries = Array[Dictionary]([{
+"item_id": "starter_sword",
+"max_level": 3,
+"min_level": 1,
+"weight": 0.3
+}, {
+"item_id": "starter_armor",
+"max_level": 3,
+"min_level": 1,
+"weight": 0.3
+}, {
+"item_id": "lucky_coin",
+"max_level": 2,
+"min_level": 1,
+"weight": 0.15
+}])

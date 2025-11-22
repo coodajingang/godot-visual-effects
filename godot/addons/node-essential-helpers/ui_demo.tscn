@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bhnt3jgw5koyw" path="res://common/ui/arrow_right_pressed.png" id="2"]
 [ext_resource type="PackedScene" path="res://common/ui/text_button.tscn" id="3"]
 [ext_resource type="Texture2D" uid="uid://dw1mj8wsusfop" path="res://common/ui/arrow_left.png" id="4"]
-[ext_resource type="Script" path="res://addons/node-essential-helpers/ui_demo.gd" id="5"]
+[ext_resource type="Script" uid="uid://fsht1oo24n6o" path="res://addons/node-essential-helpers/ui_demo.gd" id="5"]
 [ext_resource type="Theme" uid="uid://cjj058exws11l" path="res://common/ui/ui_theme.tres" id="6"]
 [ext_resource type="Texture2D" uid="uid://cnsmepsuaxrnm" path="res://common/ui/arrow_left_pressed.png" id="7"]
 

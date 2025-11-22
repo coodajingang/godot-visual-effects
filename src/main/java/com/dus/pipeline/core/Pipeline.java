@@ -1,15 +1,27 @@
 package com.dus.pipeline.core;
 
-import com.dus.pipeline.metrics.MetricsCollector;
 import com.dus.pipeline.metrics.DefaultMetricsCollector;
+import com.dus.pipeline.metrics.MetricsCollector;
+import com.dus.pipeline.metrics.OperatorMetrics;
+import com.dus.pipeline.splitter.BatchSplitter;
+import com.dus.pipeline.splitter.NoBatchSplitter;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * 管道类，负责流程调度和算子链管理
  * 支持链式调用添加算子，并按顺序执行算子链
+ * 支持生命周期管理、性能指标收集和批次拆分
  * 
  * @param <I> 初始输入数据类型
  * @param <O> 最终输出数据类型
@@ -18,17 +30,15 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class Pipeline<I, O> {
     
-    /**
-     * 管道状态枚举
-     */
-    public enum PipelineStatus {
-        INIT, RUNNING, STOPPING, STOPPED, FAILED
-    }
-    
     private final SourceOperator<I> source;
     private final List<Operator<?, ?>> operators;
-    private final MetricsCollector metricsCollector;
-    private final AtomicReference<PipelineStatus> status;
+    private final ExecutorService executor;
+    private MetricsCollector metricsCollector;
+    private BatchSplitter<I> batchSplitter;
+    private PipelineStatus status;
+    private final AtomicLong totalBatchesProcessed;
+    private long pipelineStartTime;
+    private long pipelineDurationNanos;
     
     /**
      * 构造函数，初始化管道
@@ -37,21 +47,19 @@ public class Pipeline<I, O> {
      * @throws IllegalArgumentException 如果source为null
      */
     public Pipeline(SourceOperator<I> source) {
-        this(source, new DefaultMetricsCollector());
-    }
-    
-    /**
-     * 构造函数，初始化管道并指定指标收集器
-     * 
-     * @param source 数据源算子
-     * @param metricsCollector 指标收集器
-     * @throws IllegalArgumentException 如果source或metricsCollector为null
-     */
-    public Pipeline(SourceOperator<I> source, MetricsCollector metricsCollector) {
         this.source = Objects.requireNonNull(source, "Source operator cannot be null");
-        this.metricsCollector = Objects.requireNonNull(metricsCollector, "Metrics collector cannot be null");
         this.operators = new ArrayList<>();
-        this.status = new AtomicReference<>(PipelineStatus.INIT);
+        this.executor = Executors.newSingleThreadExecutor(r -> {
+            Thread t = new Thread(r, "Pipeline-Executor");
+            t.setDaemon(false);
+            return t;
+        });
+        this.metricsCollector = new DefaultMetricsCollector();
+        this.batchSplitter = new NoBatchSplitter<>();
+        this.status = PipelineStatus.INIT;
+        this.totalBatchesProcessed = new AtomicLong(0);
+        this.pipelineStartTime = 0;
+        this.pipelineDurationNanos = 0;
     }
     
     /**
@@ -73,123 +81,141 @@ public class Pipeline<I, O> {
     /**
      * 启动管道执行
      * 循环从数据源获取数据，并通过算子链进行处理
+     * 支持 metrics 收集和 batch 拆分
      * 
      * @throws Exception 管道执行过程中可能抛出的异常
      */
     public void run() throws Exception {
-        if (!status.compareAndSet(PipelineStatus.INIT, PipelineStatus.RUNNING)) {
-            throw new IllegalStateException("Pipeline is already running or has been stopped");
-        }
+        System.out.println("Starting pipeline execution...");
+        System.out.println("Source: " + source.name());
+        System.out.println("Operators: " + operators.stream().map(Operator::name).reduce((a, b) -> a + " -> " + b).orElse("None"));
+        System.out.println("BatchSplitter: " + batchSplitter.name());
+        System.out.println("---");
+        
+        status = PipelineStatus.RUNNING;
+        pipelineStartTime = System.nanoTime();
         
         try {
-            System.out.println("Starting pipeline execution...");
-            System.out.println("Source: " + source.name());
-            System.out.println("Operators: " + operators.stream().map(Operator::name).reduce((a, b) -> a + " -> " + b).orElse("None"));
-            System.out.println("---");
-            
             int batchCount = 0;
-            while (status.get() == PipelineStatus.RUNNING) {
+            while (status == PipelineStatus.RUNNING) {
                 try {
                     // 从数据源获取下一批数据
-                    long sourceStartTime = System.nanoTime();
                     I batch = source.nextBatch();
-                    long sourceDuration = System.nanoTime() - sourceStartTime;
-                    
                     if (batch == null) {
-                        metricsCollector.recordSuccess(source.name(), sourceDuration);
                         System.out.println("No more data available. Pipeline execution completed.");
                         break;
                     }
                     
-                    metricsCollector.recordSuccess(source.name(), sourceDuration);
-                    batchCount++;
-                    System.out.println("Processing batch " + batchCount);
-                    
-                    // 依次执行算子链
-                    Object currentData = batch;
-                    for (Operator<?, ?> operator : operators) {
-                        if (status.get() != PipelineStatus.RUNNING) {
-                            break;
-                        }
-                        
-                        long operatorStartTime = System.nanoTime();
-                        try {
-                            @SuppressWarnings("unchecked")
-                            Operator<Object, Object> typedOperator = (Operator<Object, Object>) operator;
-                            currentData = typedOperator.process(currentData);
-                            long operatorDuration = System.nanoTime() - operatorStartTime;
-                            metricsCollector.recordSuccess(operator.name(), operatorDuration);
-                            System.out.println("  -> " + operator.name() + " completed");
-                        } catch (Exception e) {
-                            long operatorDuration = System.nanoTime() - operatorStartTime;
-                            metricsCollector.recordFailure(operator.name(), operatorDuration);
-                            System.err.println("Error in operator " + operator.name() + ": " + e.getMessage());
-                            throw e;
-                        }
+                    // 判断是否需要拆分
+                    List<I> batches;
+                    if (batchSplitter.shouldSplit(batch)) {
+                        batches = batchSplitter.split(batch);
+                        System.out.println("Batch split into " + batches.size() + " sub-batches");
+                    } else {
+                        batches = new ArrayList<>();
+                        batches.add(batch);
                     }
                     
-                    System.out.println("Batch " + batchCount + " processed successfully");
-                    System.out.println("---");
+                    // 处理每个子批次
+                    for (I subBatch : batches) {
+                        batchCount++;
+                        System.out.println("Processing batch " + batchCount);
+                        
+                        // 依次执行算子链
+                        Object currentData = subBatch;
+                        for (Operator<?, ?> operator : operators) {
+                            long startTime = System.nanoTime();
+                            try {
+                                @SuppressWarnings("unchecked")
+                                Operator<Object, Object> typedOperator = (Operator<Object, Object>) operator;
+                                currentData = typedOperator.process(currentData);
+                                
+                                long duration = System.nanoTime() - startTime;
+                                metricsCollector.recordSuccess(operator.name(), duration);
+                                System.out.println("  -> " + operator.name() + " completed (duration: " + (duration / 1_000_000.0) + "ms)");
+                            } catch (Exception e) {
+                                long duration = System.nanoTime() - startTime;
+                                metricsCollector.recordFailure(operator.name(), duration, e);
+                                System.err.println("Error in operator " + operator.name() + ": " + e.getMessage());
+                                throw e;
+                            }
+                        }
+                        
+                        totalBatchesProcessed.incrementAndGet();
+                        System.out.println("Batch " + batchCount + " processed successfully");
+                        System.out.println("---");
+                    }
                     
                 } catch (Exception e) {
-                    status.set(PipelineStatus.FAILED);
                     System.err.println("Pipeline execution failed on batch " + (batchCount + 1) + ": " + e.getMessage());
+                    status = PipelineStatus.FAILED;
                     throw e;
                 }
             }
             
-            if (status.get() == PipelineStatus.RUNNING) {
-                status.set(PipelineStatus.STOPPED);
+            pipelineDurationNanos = System.nanoTime() - pipelineStartTime;
+            if (status == PipelineStatus.RUNNING) {
+                status = PipelineStatus.STOPPED;
             }
-            
-            System.out.println("Total batches processed: " + batchCount);
+            System.out.println("Total batches processed: " + totalBatchesProcessed.get());
             System.out.println("Pipeline execution finished successfully.");
-            
-        } catch (Exception e) {
-            status.set(PipelineStatus.FAILED);
-            throw e;
+        } finally {
+            if (status == PipelineStatus.RUNNING) {
+                status = PipelineStatus.STOPPED;
+            }
         }
     }
     
     /**
-     * 优雅关闭管道
+     * 记录开始处理算子的时间
+     * 用于内部 metrics 统计
+     *
+     * @param operatorName 算子名称
+     * @return 记录的开始时间（纳秒）
      */
-    public void shutdown() {
-        status.compareAndSet(PipelineStatus.RUNNING, PipelineStatus.STOPPING);
-        status.set(PipelineStatus.STOPPED);
-        System.out.println("Pipeline shutdown completed.");
-    }
-    
-    /**
-     * 等待管道执行完成
-     * 
-     * @param timeoutMillis 超时时间（毫秒）
-     * @return 如果在超时时间内完成返回true，否则返回false
-     */
-    public boolean awaitTermination(long timeoutMillis) {
-        long startTime = System.currentTimeMillis();
-        PipelineStatus currentStatus;
-        while ((currentStatus = status.get()) == PipelineStatus.RUNNING || currentStatus == PipelineStatus.STOPPING) {
-            if (System.currentTimeMillis() - startTime > timeoutMillis) {
-                return false;
-            }
+    private long recordOperatorStartTime(String operatorName) {
+        metricsCollector.recordStart(operatorName);
+        return System.nanoTime();
+        System.out.println("---");
+        
+        int batchCount = 0;
+        while (true) {
             try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                return false;
+                // 从数据源获取下一批数据
+                I batch = source.nextBatch();
+                if (batch == null) {
+                    System.out.println("No more data available. Pipeline execution completed.");
+                    break;
+                }
+                
+                batchCount++;
+                System.out.println("Processing batch " + batchCount);
+                
+                // 依次执行算子链
+                Object currentData = batch;
+                for (Operator<?, ?> operator : operators) {
+                    try {
+                        @SuppressWarnings("unchecked")
+                        Operator<Object, Object> typedOperator = (Operator<Object, Object>) operator;
+                        currentData = typedOperator.process(currentData);
+                        System.out.println("  -> " + operator.name() + " completed");
+                    } catch (Exception e) {
+                        System.err.println("Error in operator " + operator.name() + ": " + e.getMessage());
+                        throw e;
+                    }
+                }
+                
+                System.out.println("Batch " + batchCount + " processed successfully");
+                System.out.println("---");
+                
+            } catch (Exception e) {
+                System.err.println("Pipeline execution failed on batch " + (batchCount + 1) + ": " + e.getMessage());
+                throw e;
             }
         }
-        return true;
-    }
-    
-    /**
-     * 获取当前管道状态
-     * 
-     * @return 管道状态
-     */
-    public PipelineStatus getStatus() {
-        return status.get();
+        
+        System.out.println("Total batches processed: " + batchCount);
+        System.out.println("Pipeline execution finished successfully.");
     }
     
     /**
@@ -209,20 +235,123 @@ public class Pipeline<I, O> {
     public List<Operator<?, ?>> getOperators() {
         return new ArrayList<>(operators);
     }
-    
+
     /**
-     * 获取指标收集器
-     * 
-     * @return 指标收集器
+     * 设置 metrics 收集器
+     *
+     * @param metricsCollector metrics 收集器
+     */
+    public void setMetricsCollector(MetricsCollector metricsCollector) {
+        this.metricsCollector = Objects.requireNonNull(metricsCollector, "MetricsCollector cannot be null");
+    }
+
+    /**
+     * 获取 metrics 收集器
+     *
+     * @return metrics 收集器
      */
     public MetricsCollector getMetricsCollector() {
         return metricsCollector;
     }
-    
+
     /**
-     * 打印指标报告
+     * 获取所有算子的 metrics
+     *
+     * @return 包含所有算子 metrics 的 Map
+     */
+    public Map<String, OperatorMetrics> getMetrics() {
+        return metricsCollector.getAllMetrics();
+    }
+
+    /**
+     * 打印可读的性能报告
      */
     public void printMetricsReport() {
-        metricsCollector.printMetricsReport();
+        System.out.println("\n========== Pipeline Metrics Report ==========");
+        System.out.println("Pipeline Status: " + status);
+        System.out.println("Total Batches Processed: " + totalBatchesProcessed.get());
+        System.out.println("Total Duration: " + (pipelineDurationNanos / 1_000_000.0) + " ms");
+        System.out.println("\nOperator Metrics:");
+        System.out.println("---");
+        
+        Map<String, OperatorMetrics> metrics = metricsCollector.getAllMetrics();
+        for (Map.Entry<String, OperatorMetrics> entry : metrics.entrySet()) {
+            OperatorMetrics m = entry.getValue();
+            System.out.println(String.format(
+                "%s: invoke=%d, success=%d, failure=%d, avg=%.2fms, min=%dms, max=%dms",
+                m.getOperatorName(),
+                m.getInvokeCount(),
+                m.getSuccessCount(),
+                m.getFailureCount(),
+                m.getAvgDurationNanos() / 1_000_000.0,
+                m.getMinDurationNanos() / 1_000_000,
+                m.getMaxDurationNanos() / 1_000_000
+            ));
+        }
+        System.out.println("============================================\n");
+    }
+
+    /**
+     * 设置批次拆分器
+     *
+     * @param batchSplitter 批次拆分器
+     */
+    public void setBatchSplitter(BatchSplitter<I> batchSplitter) {
+        this.batchSplitter = Objects.requireNonNull(batchSplitter, "BatchSplitter cannot be null");
+    }
+
+    /**
+     * 获取批次拆分器
+     *
+     * @return 批次拆分器
+     */
+    public BatchSplitter<I> getBatchSplitter() {
+        return batchSplitter;
+    }
+
+    /**
+     * 获取当前 Pipeline 状态
+     *
+     * @return Pipeline 状态
+     */
+    public PipelineStatus getStatus() {
+        return status;
+    }
+
+    /**
+     * 获取内部 executor
+     *
+     * @return ExecutorService
+     */
+    public ExecutorService getExecutor() {
+        return executor;
+    }
+
+    /**
+     * 优雅关闭，等待当前批次完成
+     */
+    public void shutdown() {
+        status = PipelineStatus.STOPPING;
+        executor.shutdown();
+    }
+
+    /**
+     * 强制关闭，中断当前处理
+     */
+    public void shutdownNow() {
+        status = PipelineStatus.STOPPING;
+        executor.shutdownNow();
+    }
+
+    /**
+     * 等待流程终止
+     *
+     * @param timeout 超时时间
+     * @param unit 时间单位
+     * @return 如果成功终止返回 true，超时返回 false
+     * @throws InterruptedException 如果等待被中断
+     */
+    public boolean awaitTermination(long timeout, TimeUnit unit) throws InterruptedException {
+        return executor.awaitTermination(timeout, unit);
     }
 }

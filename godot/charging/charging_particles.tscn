@@ -50,7 +50,7 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tuivp"]
 _data = {
-"Charge": SubResource("4")
+&"Charge": SubResource("4")
 }
 
 [node name="ChargingParticles" type="GPUParticles2D"]
