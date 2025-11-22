@@ -22,6 +22,18 @@ build/
 *.ear
 *.zip
 *.tar.gz
+*.log
+.classpath
+.project
+.settings/
+*.class
+*.swp
+*.swo
+*~
+.DS_Store
+.idea/
+*.iml
+out/
 
 # IDE
 .idea/
