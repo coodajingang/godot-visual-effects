@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="LevelCurve" load_steps=2 format=3 uid="uid://bx3gfqp8yls5r1yj"]
+
+[ext_resource type="Script" path="res://addons/universal_framework/game/resources/level_curve.gd"]
+
+[resource]
+script = ExtResource("1")
+xp_thresholds = [100, 250, 450, 700, 1000, 1350, 1750, 2200, 2700, 3250, 3850, 4500, 5200, 5950, 6750, 7600, 8500, 9450, 10450, 11500]
+hp_scaling = 1.1
+damage_scaling = 1.05
+move_speed_scaling = 1.02
