@@ -1,0 +1,10 @@
+Log entry 1: INFO - Application started successfully
+Log entry 2: DEBUG - Database connection established
+Log entry 3: INFO - Processing user request
+Log entry 4: WARN - Cache miss for key: user_123
+Log entry 5: INFO - Request processed successfully
+Log entry 6: ERROR - Failed to send email notification
+Log entry 7: INFO - Background task completed
+Log entry 8: DEBUG - Memory usage: 512MB
+Log entry 9: WARN - High response time detected: 2.5s
+Log entry 10: INFO - Application shutdown initiated

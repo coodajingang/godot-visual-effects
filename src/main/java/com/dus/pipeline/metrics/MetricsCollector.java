@@ -12,46 +12,43 @@ import java.util.Map;
 public interface MetricsCollector {
 
     /**
-     * 记录算子执行开始
+     * 记录算子成功调用
      *
      * @param operatorName 算子名称
-     */
-    void recordStart(String operatorName);
-
-    /**
-     * 记录算子执行成功
-     *
-     * @param operatorName 算子名称
-     * @param durationNanos 执行耗时（纳秒）
+     * @param durationNanos 耗时（纳秒）
      */
     void recordSuccess(String operatorName, long durationNanos);
 
     /**
-     * 记录算子执行失败
+     * 记录算子失败调用
      *
      * @param operatorName 算子名称
-     * @param durationNanos 执行耗时（纳秒）
-     * @param ex 异常对象
+     * @param durationNanos 耗时（纳秒）
      */
-    void recordFailure(String operatorName, long durationNanos, Throwable ex);
+    void recordFailure(String operatorName, long durationNanos);
 
     /**
-     * 获取特定算子的指标
+     * 获取指定算子的指标
      *
      * @param operatorName 算子名称
-     * @return 算子指标对象，如果不存在返回null
+     * @return 算子指标
      */
-    OperatorMetrics getMetrics(String operatorName);
+    OperatorMetrics getOperatorMetrics(String operatorName);
 
     /**
      * 获取所有算子的指标
      *
-     * @return 包含所有算子指标的Map，key为算子名称，value为指标对象
+     * @return 所有算子指标的映射
      */
     Map<String, OperatorMetrics> getAllMetrics();
 
     /**
-     * 重置所有指标数据
+     * 重置所有统计数据
      */
     void reset();
+
+    /**
+     * 打印指标报告
+     */
+    void printMetricsReport();
 }

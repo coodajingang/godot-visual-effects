@@ -1,68 +1,75 @@
 package com.dus.pipeline.metrics;
 
-import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * 默认的指标收集器实现
- * 使用 ConcurrentHashMap 存储每个算子的统计数据，保证线程安全
+ * 默认指标收集器实现
+ * 线程安全的指标收集器，使用ConcurrentHashMap存储算子指标
  *
  * @author Dus
  * @version 1.0
  */
 public class DefaultMetricsCollector implements MetricsCollector {
-
-    private final Map<String, OperatorMetrics> metrics;
+    
+    private final ConcurrentHashMap<String, OperatorMetrics> metricsMap;
 
     /**
      * 构造函数
      */
     public DefaultMetricsCollector() {
-        this.metrics = new ConcurrentHashMap<>();
+        this.metricsMap = new ConcurrentHashMap<>();
     }
-
-    @Override
-    public void recordStart(String operatorName) {
-        // 不需要特别处理，getOrCreateMetrics 会在需要时创建
-    }
-
+    
     @Override
     public void recordSuccess(String operatorName, long durationNanos) {
-        OperatorMetrics m = getOrCreateMetrics(operatorName);
-        m.recordSuccess(durationNanos);
+        OperatorMetrics metrics = metricsMap.computeIfAbsent(operatorName, DefaultOperatorMetrics::new);
+        ((DefaultOperatorMetrics) metrics).recordSuccess(durationNanos);
     }
-
+    
     @Override
-    public void recordFailure(String operatorName, long durationNanos, Throwable ex) {
-        OperatorMetrics m = getOrCreateMetrics(operatorName);
-        m.recordFailure(durationNanos);
+    public void recordFailure(String operatorName, long durationNanos) {
+        OperatorMetrics metrics = metricsMap.computeIfAbsent(operatorName, DefaultOperatorMetrics::new);
+        ((DefaultOperatorMetrics) metrics).recordFailure(durationNanos);
     }
-
+    
     @Override
-    public OperatorMetrics getMetrics(String operatorName) {
-        return metrics.get(operatorName);
+    public OperatorMetrics getOperatorMetrics(String operatorName) {
+        return metricsMap.get(operatorName);
     }
-
+    
     @Override
     public Map<String, OperatorMetrics> getAllMetrics() {
-        return Collections.unmodifiableMap(new ConcurrentHashMap<>(metrics));
+        return new ConcurrentHashMap<>(metricsMap);
+    }
+    
+    @Override
+    public void reset() {
+        metricsMap.values().forEach(OperatorMetrics::reset);
+        metricsMap.clear();
     }
 
     @Override
-    public void reset() {
-        for (OperatorMetrics m : metrics.values()) {
-            m.reset();
-        }
-    }
+    public void printMetricsReport() {
+        System.out.println("\n=== Pipeline Metrics Report ===");
+        System.out.println("Total Operators: " + metricsMap.size());
+        System.out.println();
 
-    /**
-     * 获取或创建指定算子的指标对象
-     *
-     * @param operatorName 算子名称
-     * @return 算子指标对象
-     */
-    private OperatorMetrics getOrCreateMetrics(String operatorName) {
-        return metrics.computeIfAbsent(operatorName, OperatorMetrics::new);
+        for (Map.Entry<String, OperatorMetrics> entry : metricsMap.entrySet()) {
+            OperatorMetrics metrics = entry.getValue();
+            System.out.println("Operator: " + metrics.getOperatorName());
+            System.out.println("  Total Calls: " + metrics.getTotalCount());
+            System.out.println("  Success: " + metrics.getSuccessCount());
+            System.out.println("  Failure: " + metrics.getFailureCount());
+            System.out.println("  Success Rate: " + String.format("%.2f%%",
+                metrics.getTotalCount() == 0 ? 0.0 : (double) metrics.getSuccessCount() / metrics.getTotalCount() * 100));
+            System.out.println("  Avg Duration: " + String.format("%.2f ms", metrics.getAverageDurationNanos() / 1_000_000.0));
+            System.out.println("  Min Duration: " + String.format("%.2f ms", metrics.getMinDurationNanos() / 1_000_000.0));
+            System.out.println("  Max Duration: " + String.format("%.2f ms", metrics.getMaxDurationNanos() / 1_000_000.0));
+            System.out.println("  Total Duration: " + String.format("%.2f s", metrics.getTotalDurationNanos() / 1_000_000_000.0));
+            System.out.println();
+        }
+
+        System.out.println("=== End of Report ===\n");
     }
 }

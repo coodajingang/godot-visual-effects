@@ -9,154 +9,68 @@ import java.util.Objects;
  * @author Dus
  * @version 1.0
  */
-public class OperatorMetrics {
-    private final String operatorName;
-    private long invokeCount;
-    private long successCount;
-    private long failureCount;
-    private long totalDurationNanos;
-    private long minDurationNanos;
-    private long maxDurationNanos;
-
-    /**
-     * 构造函数
-     *
-     * @param operatorName 算子名称
-     */
-    public OperatorMetrics(String operatorName) {
-        this.operatorName = Objects.requireNonNull(operatorName, "Operator name cannot be null");
-        this.invokeCount = 0;
-        this.successCount = 0;
-        this.failureCount = 0;
-        this.totalDurationNanos = 0;
-        this.minDurationNanos = Long.MAX_VALUE;
-        this.maxDurationNanos = 0;
-    }
+public interface OperatorMetrics {
 
     /**
      * 获取算子名称
      *
      * @return 算子名称
      */
-    public String getOperatorName() {
-        return operatorName;
-    }
+    String getOperatorName();
+
+    /**
+     * 获取成功调用次数
+     *
+     * @return 成功调用次数
+     */
+    long getSuccessCount();
+
+    /**
+     * 获取失败调用次数
+     *
+     * @return 失败调用次数
+     */
+    long getFailureCount();
 
     /**
      * 获取总调用次数
      *
-     * @return 调用次数
+     * @return 总调用次数
      */
-    public long getInvokeCount() {
-        return invokeCount;
-    }
-
-    /**
-     * 获取成功次数
-     *
-     * @return 成功次数
-     */
-    public long getSuccessCount() {
-        return successCount;
-    }
-
-    /**
-     * 获取失败次数
-     *
-     * @return 失败次数
-     */
-    public long getFailureCount() {
-        return failureCount;
-    }
-
-    /**
-     * 获取总耗时（纳秒）
-     *
-     * @return 总耗时（纳秒）
-     */
-    public long getTotalDurationNanos() {
-        return totalDurationNanos;
-    }
-
-    /**
-     * 获取最小单次耗时（纳秒）
-     *
-     * @return 最小单次耗时（纳秒）
-     */
-    public long getMinDurationNanos() {
-        return minDurationNanos == Long.MAX_VALUE ? 0 : minDurationNanos;
-    }
-
-    /**
-     * 获取最大单次耗时（纳秒）
-     *
-     * @return 最大单次耗时（纳秒）
-     */
-    public long getMaxDurationNanos() {
-        return maxDurationNanos;
+    default long getTotalCount() {
+        return getSuccessCount() + getFailureCount();
     }
 
     /**
      * 获取平均耗时（纳秒）
      *
-     * @return 平均耗时（纳秒）
+     * @return 平均耗时
      */
-    public double getAvgDurationNanos() {
-        if (successCount == 0) {
-            return 0.0;
-        }
-        return (double) totalDurationNanos / successCount;
-    }
+    double getAverageDurationNanos();
 
     /**
-     * 记录一次成功的调用
+     * 获取最小耗时（纳秒）
      *
-     * @param durationNanos 耗时（纳秒）
+     * @return 最小耗时
      */
-    protected synchronized void recordSuccess(long durationNanos) {
-        this.invokeCount++;
-        this.successCount++;
-        this.totalDurationNanos += durationNanos;
-        this.minDurationNanos = Math.min(minDurationNanos, durationNanos);
-        this.maxDurationNanos = Math.max(maxDurationNanos, durationNanos);
-    }
+    long getMinDurationNanos();
 
     /**
-     * 记录一次失败的调用
+     * 获取最大耗时（纳秒）
      *
-     * @param durationNanos 耗时（纳秒）
+     * @return 最大耗时
      */
-    protected synchronized void recordFailure(long durationNanos) {
-        this.invokeCount++;
-        this.failureCount++;
-        this.totalDurationNanos += durationNanos;
-        this.minDurationNanos = Math.min(minDurationNanos, durationNanos);
-        this.maxDurationNanos = Math.max(maxDurationNanos, durationNanos);
-    }
+    long getMaxDurationNanos();
 
     /**
-     * 重置所有统计数据
+     * 获取总耗时（纳秒）
+     *
+     * @return 总耗时
      */
-    protected synchronized void reset() {
-        this.invokeCount = 0;
-        this.successCount = 0;
-        this.failureCount = 0;
-        this.totalDurationNanos = 0;
-        this.minDurationNanos = Long.MAX_VALUE;
-        this.maxDurationNanos = 0;
-    }
+    long getTotalDurationNanos();
 
-    @Override
-    public String toString() {
-        return "OperatorMetrics{" +
-                "operatorName='" + operatorName + '\'' +
-                ", invokeCount=" + invokeCount +
-                ", successCount=" + successCount +
-                ", failureCount=" + failureCount +
-                ", totalDurationNanos=" + totalDurationNanos +
-                ", minDurationNanos=" + getMinDurationNanos() +
-                ", maxDurationNanos=" + maxDurationNanos +
-                ", avgDurationNanos=" + String.format("%.2f", getAvgDurationNanos()) +
-                '}';
-    }
+    /**
+     * 重置统计数据
+     */
+    void reset();
 }
