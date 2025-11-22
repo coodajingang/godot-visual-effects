@@ -15,8 +15,10 @@ extends Control
 @onready var product_list: VBoxContainer = %ProductList
 @onready var purchase_feedback: Label = %PurchaseFeedback
 @onready var close_store_button: Button = %CloseStoreButton
+@onready var equipment_button: Button = %EquipmentButton
 
 var _catalog: Array = []
+var _equipment_panel: Control = null
 
 func _ready() -> void:
     profile_panel.visible = false
@@ -28,11 +30,17 @@ func _ready() -> void:
     store_button.pressed.connect(_on_store_button_pressed)
     sync_button.pressed.connect(_on_sync_button_pressed)
     close_store_button.pressed.connect(_on_close_store_pressed)
+    
+    if equipment_button:
+        equipment_button.pressed.connect(_on_equipment_button_pressed)
+    
+    _setup_equipment_panel()
 
     GameApp.event_bus.subscribe("auth.login_succeeded", Callable(self, "_on_login_succeeded"))
     GameApp.event_bus.subscribe("datakit.cloud_synced", Callable(self, "_on_cloud_synced"))
     GameApp.event_bus.subscribe("pay.purchase_succeeded", Callable(self, "_on_purchase_succeeded"))
     GameApp.event_bus.subscribe("pay.purchase_failed", Callable(self, "_on_purchase_failed"))
+    GameApp.event_bus.subscribe("equipment.currency_changed", Callable(self, "_on_equipment_currency_changed"))
 
 func _on_login_pressed() -> void:
     _perform_login(email_input.text.strip_edges(), password_input.text)
@@ -119,3 +127,20 @@ func _on_purchase_succeeded(payload: Dictionary) -> void:
     var rewards := payload.get("rewards", {})
     purchase_feedback.text = "Purchase successful! Rewards: %s" % JSON.stringify(rewards)
     _update_profile_panel()
+
+func _setup_equipment_panel() -> void:
+    var equipment_panel_scene := load("res://ui/equipment_panel.tscn")
+    if equipment_panel_scene:
+        _equipment_panel = equipment_panel_scene.instantiate()
+        add_child(_equipment_panel)
+        _equipment_panel.hide()
+
+func _on_equipment_button_pressed() -> void:
+    if _equipment_panel:
+        if _equipment_panel.visible:
+            _equipment_panel.hide()
+        else:
+            _equipment_panel.call("open_panel")
+
+func _on_equipment_currency_changed(payload: Dictionary) -> void:
+    purchase_feedback.text = "Equipment currency: %d" % payload.get("currency", 0)

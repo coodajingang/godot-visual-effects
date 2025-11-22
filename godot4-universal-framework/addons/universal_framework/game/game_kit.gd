@@ -34,10 +34,15 @@ func complete_battle(result: Dictionary) -> Dictionary:
     var cloud := data_kit.get_cloud_save()
     cloud["progress"] = result.get("progress", cloud.get("progress", {}))
     data_kit.update_cloud_save(cloud)
+    
+    var equipment_manager = game_app.get_equipment_manager()
+    if equipment_manager and result.has("currency"):
+        equipment_manager.add_currency(result.get("currency", 0))
 
     var summary = {
         "experience": exp_gain,
         "loot": result.get("loot", []),
+        "currency": result.get("currency", 0),
         "profile": profile
     }
     battle_completed.emit(summary)
