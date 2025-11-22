@@ -19,6 +19,13 @@ import java.util.concurrent.atomic.AtomicLong;
  * 管道类，负责流程调度和算子链管理
  * 支持链式调用添加算子，并按顺序执行算子链
  * 支持生命周期管理、性能指标收集和批次拆分
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+/**
+ * 管道类，负责流程调度和算子链管理
+ * 支持链式调用添加算子，并按顺序执行算子链
  * 
  * @param <I> 初始输入数据类型
  * @param <O> 最终输出数据类型
@@ -173,6 +180,46 @@ public class Pipeline<I, O> {
     private long recordOperatorStartTime(String operatorName) {
         metricsCollector.recordStart(operatorName);
         return System.nanoTime();
+        System.out.println("---");
+        
+        int batchCount = 0;
+        while (true) {
+            try {
+                // 从数据源获取下一批数据
+                I batch = source.nextBatch();
+                if (batch == null) {
+                    System.out.println("No more data available. Pipeline execution completed.");
+                    break;
+                }
+                
+                batchCount++;
+                System.out.println("Processing batch " + batchCount);
+                
+                // 依次执行算子链
+                Object currentData = batch;
+                for (Operator<?, ?> operator : operators) {
+                    try {
+                        @SuppressWarnings("unchecked")
+                        Operator<Object, Object> typedOperator = (Operator<Object, Object>) operator;
+                        currentData = typedOperator.process(currentData);
+                        System.out.println("  -> " + operator.name() + " completed");
+                    } catch (Exception e) {
+                        System.err.println("Error in operator " + operator.name() + ": " + e.getMessage());
+                        throw e;
+                    }
+                }
+                
+                System.out.println("Batch " + batchCount + " processed successfully");
+                System.out.println("---");
+                
+            } catch (Exception e) {
+                System.err.println("Pipeline execution failed on batch " + (batchCount + 1) + ": " + e.getMessage());
+                throw e;
+            }
+        }
+        
+        System.out.println("Total batches processed: " + batchCount);
+        System.out.println("Pipeline execution finished successfully.");
     }
     
     /**

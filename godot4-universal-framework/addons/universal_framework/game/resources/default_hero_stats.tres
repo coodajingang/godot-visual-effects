@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="HeroStats" load_steps=2 format=3 uid="uid://d7hjtgg3v1fvaw5d"]
+
+[ext_resource type="Script" path="res://addons/universal_framework/game/resources/hero_stats.gd"]
+
+[resource]
+script = ExtResource("1")
+max_hp = 100.0
+damage = 10.0
+move_speed = 300.0
+attack_speed = 1.0
+critical_chance = 0.05
+critical_multiplier = 1.5
+armor = 0.0
+dodge_chance = 0.0

@@ -10,8 +10,13 @@ export_presets.cfg
 .mono/
 data_*/
 
-# Java/Maven ignores
+# Java/Maven build artifacts
 target/
+build/
+.classpath
+.project
+.settings/
+*.class
 *.jar
 *.war
 *.ear
@@ -29,3 +34,21 @@ target/
 .idea/
 *.iml
 out/
+
+# IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+*.swp
+*.swo
+*~
+
+# Maven
+.m2/
+dependency-reduced-pom.xml
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="EquipmentItem" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/equipment_item.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+item_id = "starter_armor"
+display_name = "Starter Armor"
+description = "Simple leather armor providing basic protection."
+slot = 1
+rarity = 0
+max_level = 10
+base_damage = 0.0
+base_defense = 5.0
+base_crit_chance = 0.0
+base_crit_damage = 0.0
+base_attack_speed = 0.0
+base_movement_speed = 0.0
+base_health = 50.0
+base_health_regen = 0.5
+damage_per_level = 0.0
+defense_per_level = 1.0
+crit_chance_per_level = 0.0
+crit_damage_per_level = 0.0
+attack_speed_per_level = 0.0
+movement_speed_per_level = 0.0
+health_per_level = 10.0
+health_regen_per_level = 0.1
+base_upgrade_cost = 100
+cost_per_level_multiplier = 1.5
+has_special_effect = false
+effect_id = ""
+effect_chance = 0.0
+effect_description = ""

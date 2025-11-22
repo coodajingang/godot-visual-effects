@@ -43,25 +43,31 @@ size_flags_horizontal = 3
 custom_constants/separation = 12
 
 [node name="EmailInput" type="LineEdit" parent="MarginContainer/VBox/LoginRow"]
+unique_name_in_owner = true
 size_flags_horizontal = 3
 placeholder_text = "Email"
 
 [node name="PasswordInput" type="LineEdit" parent="MarginContainer/VBox/LoginRow"]
+unique_name_in_owner = true
 size_flags_horizontal = 3
 placeholder_text = "Password"
 secret = true
 
 [node name="LoginButton" type="Button" parent="MarginContainer/VBox/LoginRow"]
+unique_name_in_owner = true
 text = "Sign In"
 
 [node name="GuestButton" type="Button" parent="MarginContainer/VBox/LoginRow"]
+unique_name_in_owner = true
 text = "Guest Login"
 
 [node name="StatusLabel" type="Label" parent="MarginContainer/VBox"]
+unique_name_in_owner = true
 text = "Please sign in to continue"
 add_theme_color_override("font_color", Color(0.784314, 0.823529, 0.913725))
 
 [node name="ProfilePanel" type="PanelContainer" parent="MarginContainer/VBox"]
+unique_name_in_owner = true
 size_flags_horizontal = 3
 size_flags_vertical = 1
 visible = false
@@ -74,24 +80,34 @@ margin_right = 12
 margin_bottom = 12
 
 [node name="NicknameLabel" type="Label" parent="MarginContainer/VBox/ProfilePanel/ProfileVBox"]
+unique_name_in_owner = true
 text = "Nickname: -"
 
 [node name="LevelLabel" type="Label" parent="MarginContainer/VBox/ProfilePanel/ProfileVBox"]
+unique_name_in_owner = true
 text = "Level: -"
 
 [node name="CurrencyLabel" type="Label" parent="MarginContainer/VBox/ProfilePanel/ProfileVBox"]
+unique_name_in_owner = true
 text = "Gold: 0 | Gems: 0"
 
 [node name="ProfileButtons" type="HBoxContainer" parent="MarginContainer/VBox/ProfilePanel/ProfileVBox"]
 custom_constants/separation = 12
 
 [node name="SyncButton" type="Button" parent="MarginContainer/VBox/ProfilePanel/ProfileVBox/ProfileButtons"]
+unique_name_in_owner = true
 text = "Sync Cloud Save"
 
 [node name="StoreButton" type="Button" parent="MarginContainer/VBox/ProfilePanel/ProfileVBox/ProfileButtons"]
+unique_name_in_owner = true
 text = "Open Store"
 
+[node name="EquipmentButton" type="Button" parent="MarginContainer/VBox/ProfilePanel/ProfileVBox/ProfileButtons"]
+unique_name_in_owner = true
+text = "Equipment"
+
 [node name="StorePanel" type="Panel" parent="MarginContainer/VBox"]
+unique_name_in_owner = true
 size_flags_horizontal = 3
 visible = false
 
@@ -112,12 +128,15 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="ProductList" type="VBoxContainer" parent="MarginContainer/VBox/StorePanel/StoreVBox/StoreScroll"]
+unique_name_in_owner = true
 size_flags_horizontal = 3
 custom_constants/separation = 6
 
 [node name="CloseStoreButton" type="Button" parent="MarginContainer/VBox/StorePanel/StoreVBox"]
+unique_name_in_owner = true
 text = "Close"
 
 [node name="PurchaseFeedback" type="Label" parent="MarginContainer/VBox"]
+unique_name_in_owner = true
 text = ""
 add_theme_color_override("font_color", Color(0.952941, 0.807843, 0.360784))

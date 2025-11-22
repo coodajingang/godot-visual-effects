@@ -4,11 +4,18 @@ class_name GameKit
 signal battle_completed(summary: Dictionary)
 signal stage_progressed(stage_info: Dictionary)
 signal task_updated(task_info: Dictionary)
+signal level_up_triggered(level: int)
+signal skill_selection_required(skills: Array)
 
 var active_stage: Dictionary = {
     "chapter": 1,
     "stage": 1
 }
+
+var experience_manager: ExperienceManager
+var skill_service: SkillService
+var level_curve: LevelCurve
+var hero_stats: HeroStats
 
 func start_battle(context: Dictionary) -> void:
     event_bus.publish("game.battle_started", context)
@@ -27,10 +34,15 @@ func complete_battle(result: Dictionary) -> Dictionary:
     var cloud := data_kit.get_cloud_save()
     cloud["progress"] = result.get("progress", cloud.get("progress", {}))
     data_kit.update_cloud_save(cloud)
+    
+    var equipment_manager = game_app.get_equipment_manager()
+    if equipment_manager and result.has("currency"):
+        equipment_manager.add_currency(result.get("currency", 0))
 
     var summary = {
         "experience": exp_gain,
         "loot": result.get("loot", []),
+        "currency": result.get("currency", 0),
         "profile": profile
     }
     battle_completed.emit(summary)
@@ -72,3 +84,33 @@ func update_task_progress(task_id: String, progress: int, goal: int) -> void:
     }
     task_updated.emit(payload)
     event_bus.publish("game.task_updated", payload)
+
+func initialize_leveling_system(base_stats: HeroStats = null, curve: LevelCurve = null) -> void:
+    hero_stats = base_stats or HeroStats.new()
+    level_curve = curve or LevelCurve.new()
+    experience_manager = ExperienceManager.new(hero_stats, level_curve)
+    add_child(experience_manager)
+    
+    skill_service = SkillService.new(hero_stats)
+    skill_service.setup(game_app)
+    add_child(skill_service)
+    
+    experience_manager.level_up.connect(_on_hero_level_up)
+
+func _on_hero_level_up(new_level: int, _remaining_xp: int) -> void:
+    level_up_triggered.emit(new_level)
+    event_bus.publish("game.hero_level_up", {
+        "level": new_level,
+        "timestamp": Time.get_ticks_msec()
+    })
+
+func get_experience_manager() -> ExperienceManager:
+    return experience_manager
+
+func get_skill_service() -> SkillService:
+    return skill_service
+
+func get_hero_stats() -> HeroStats:
+    if experience_manager:
+        return experience_manager.get_current_stats()
+    return hero_stats

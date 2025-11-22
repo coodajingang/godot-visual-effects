@@ -1,0 +1,62 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scenes/EquipmentDemo.gd" id="1"]
+
+[node name="EquipmentDemo" type="Node2D"]
+script = ExtResource("1")
+
+[node name="Background" type="ColorRect" parent="."]
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.2, 0.25, 0.3, 1)
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+
+[node name="SpawnButton" type="Button" parent="UI"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 200.0
+offset_bottom = 60.0
+text = "Spawn Random Equipment"
+
+[node name="AddCurrencyButton" type="Button" parent="UI"]
+layout_mode = 0
+offset_left = 220.0
+offset_top = 20.0
+offset_right = 400.0
+offset_bottom = 60.0
+text = "Add Currency (+500)"
+
+[node name="TestBattleButton" type="Button" parent="UI"]
+layout_mode = 0
+offset_left = 420.0
+offset_top = 20.0
+offset_right = 600.0
+offset_bottom = 60.0
+text = "Test Battle Rewards"
+
+[node name="StatusLabel" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 680.0
+offset_right = 1260.0
+offset_bottom = 700.0
+text = "Equipment Demo - Press buttons to test system"
+horizontal_alignment = 1
+
+[node name="InfoLabel" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 80.0
+offset_right = 620.0
+offset_bottom = 180.0
+text = "Controls:
+- Click buttons to spawn equipment and test features
+- Click/walk over equipment drops to collect them
+- Use Equipment button in main menu to manage gear
+- Press Space to spawn random equipment"
