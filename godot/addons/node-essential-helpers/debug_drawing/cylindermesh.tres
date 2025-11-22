@@ -1,6 +1,6 @@
 [gd_resource type="CylinderMesh" load_steps=3 format=3 uid="uid://k4370mkvqenh"]
 
-[ext_resource type="Shader" path="res://addons/node-essential-helpers/unshaded_color.gdshader" id="1"]
+[ext_resource type="Shader" uid="uid://n0rhwxh2rwbk" path="res://addons/node-essential-helpers/unshaded_color.gdshader" id="1"]
 
 [sub_resource type="ShaderMaterial" id="1"]
 render_priority = 0

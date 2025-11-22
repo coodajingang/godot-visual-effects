@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://d0aw7hwef7tyj" path="res://main/demo_picker_ui.tscn" id="1"]
 [ext_resource type="Theme" uid="uid://cjj058exws11l" path="res://common/ui/ui_theme.tres" id="2"]
-[ext_resource type="Script" path="res://main/demo_player.gd" id="5"]
-[ext_resource type="Script" path="res://main/demo_selector.gd" id="6"]
+[ext_resource type="Script" uid="uid://mcq2ojq3vmf3" path="res://main/demo_player.gd" id="5"]
+[ext_resource type="Script" uid="uid://knqunn22llx2" path="res://main/demo_selector.gd" id="6"]
 
 [sub_resource type="Shortcut" id="2"]
 

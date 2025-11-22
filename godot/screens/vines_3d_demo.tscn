@@ -38,8 +38,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ol3kg"]
 _data = {
-"Grow": SubResource("8"),
-"RESET": SubResource("9")
+&"Grow": SubResource("8"),
+&"RESET": SubResource("9")
 }
 
 [node name="Vines3DDemo" type="Node3D"]

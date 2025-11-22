@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bdbwkedjx1de8"]
 
-[ext_resource type="Script" path="res://addons/node-essential-helpers/demo_screen_slide.gd" id="1"]
-[ext_resource type="Script" path="res://addons/node-essential-helpers/scene_slideshow.gd" id="2"]
+[ext_resource type="Script" uid="uid://dji6qpdrc4j28" path="res://addons/node-essential-helpers/demo_screen_slide.gd" id="1"]
+[ext_resource type="Script" uid="uid://dagepl67eb7or" path="res://addons/node-essential-helpers/scene_slideshow.gd" id="2"]
 [ext_resource type="PackedScene" uid="uid://dsq06q027sq8n" path="res://screens/charging_demo.tscn" id="3"]
 
 [node name="Charging" type="Node2D"]

@@ -104,7 +104,7 @@ tracks/7/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kvhxp"]
 _data = {
-"Explode": SubResource("17")
+&"Explode": SubResource("17")
 }
 
 [node name="Explosion" instance=ExtResource("1")]

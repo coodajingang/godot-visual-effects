@@ -46,8 +46,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3imfd"]
 _data = {
-"RESET": SubResource("22"),
-"Rotate": SubResource("23")
+&"RESET": SubResource("22"),
+&"Rotate": SubResource("23")
 }
 
 [node name="MuzzleFlash3DDemo" type="Node3D"]

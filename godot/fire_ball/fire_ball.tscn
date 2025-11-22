@@ -303,8 +303,8 @@ tracks/7/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_sbij2"]
 _data = {
-"Fade": SubResource("18"),
-"Ignition": SubResource("17")
+&"Fade": SubResource("18"),
+&"Ignition": SubResource("17")
 }
 
 [node name="FireBallEffect" type="Node2D"]

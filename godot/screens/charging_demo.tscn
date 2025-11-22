@@ -131,8 +131,8 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_26i8l"]
 _data = {
-"Charging": SubResource("4"),
-"Setup": SubResource("5")
+&"Charging": SubResource("4"),
+&"Setup": SubResource("5")
 }
 
 [sub_resource type="CircleShape2D" id="6"]
@@ -156,7 +156,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0co5c"]
 _data = {
-"Spin": SubResource("7")
+&"Spin": SubResource("7")
 }
 
 [sub_resource type="Animation" id="8"]
@@ -259,8 +259,8 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_43ttd"]
 _data = {
-"Explode": SubResource("8"),
-"Setup": SubResource("9")
+&"Explode": SubResource("8"),
+&"Setup": SubResource("9")
 }
 
 [sub_resource type="Animation" id="10"]
@@ -353,8 +353,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_47424"]
 _data = {
-"Demo": SubResource("10"),
-"RESET": SubResource("11")
+&"Demo": SubResource("10"),
+&"RESET": SubResource("11")
 }
 
 [node name="ChargingDemo" type="Node2D"]

@@ -1,16 +1,16 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://y4r36unsikd4"]
 
-[ext_resource path="res://lightning_beam/lightning_beam.gd" type="Script" id=1]
+[ext_resource type="Script" uid="uid://byn018hb16he3" path="res://lightning_beam/lightning_beam.gd" id="1"]
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="CircleShape2D" id="1"]
 radius = 192.0
 
 [node name="LightningBeam" type="RayCast2D"]
 enabled = true
-target_position = Vector2( 600, 0 )
-script = ExtResource( 1 )
+target_position = Vector2(600, 0)
+script = ExtResource("1")
 
 [node name="JumpArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="JumpArea"]
-shape = SubResource( 1 )
+shape = SubResource("1")

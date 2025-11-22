@@ -27,7 +27,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_twuce"]
 _data = {
-"Spin": SubResource("1")
+&"Spin": SubResource("1")
 }
 
 [sub_resource type="Gradient" id="2"]
@@ -166,8 +166,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ur20m"]
 _data = {
-"Collision": SubResource("29"),
-"RESET": SubResource("30")
+&"Collision": SubResource("29"),
+&"RESET": SubResource("30")
 }
 
 [node name="ShockwaveWorld" type="Node2D"]

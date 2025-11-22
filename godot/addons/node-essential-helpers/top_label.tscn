@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://b6oy1gp7l1usp"]
 
 [ext_resource type="FontFile" path="res://common/ui/fonts/title_font.tres" id="1"]
-[ext_resource type="Script" path="res://addons/node-essential-helpers/top_label.gd" id="2"]
+[ext_resource type="Script" uid="uid://d4itl4pj1hvyb" path="res://addons/node-essential-helpers/top_label.gd" id="2"]
 
 [sub_resource type="StyleBoxFlat" id="1"]
 bg_color = Color(0, 0, 0, 0.313726)

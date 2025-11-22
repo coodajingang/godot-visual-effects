@@ -113,8 +113,8 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3eryl"]
 _data = {
-"Collide": SubResource("4"),
-"RESET": SubResource("10")
+&"Collide": SubResource("4"),
+&"RESET": SubResource("10")
 }
 
 [sub_resource type="Animation" id="8"]
@@ -135,7 +135,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_yyiwh"]
 _data = {
-"Spin": SubResource("8")
+&"Spin": SubResource("8")
 }
 
 [sub_resource type="Animation" id="9"]
@@ -166,7 +166,7 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0woet"]
 _data = {
-"Explosion": SubResource("9")
+&"Explosion": SubResource("9")
 }
 
 [node name="ExplosionSampleScene" type="Node2D"]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://1w6ije76i7eg"]
 
 [ext_resource type="PackedScene" uid="uid://b44qoeetpb288" path="res://ground_destruction_3d/arrow_indicator.tscn" id="1"]
-[ext_resource type="Script" path="res://ground_destruction_3d/ground_destruction_3d_demo.gd" id="2"]
+[ext_resource type="Script" uid="uid://d1v5bxvdx7hvo" path="res://ground_destruction_3d/ground_destruction_3d_demo.gd" id="2"]
 [ext_resource type="PackedScene" uid="uid://d72tvryhxky1" path="res://ground_destruction_3d/ground_destruction_effect.tscn" id="3"]
 [ext_resource type="Environment" uid="uid://e7tnf0mft8ab" path="res://assets/3d_environment.tres" id="4_lkilp"]
 

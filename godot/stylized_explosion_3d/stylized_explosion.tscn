@@ -2,12 +2,12 @@
 
 [ext_resource type="Texture2D" uid="uid://346qbv0sf363" path="res://stylized_explosion_3d/explosion-pattern.png" id="1"]
 [ext_resource type="ArrayMesh" path="res://stylized_explosion_3d/explosion_mesh.mesh" id="2"]
-[ext_resource type="Shader" path="res://stylized_explosion_3d/explosion.gdshader" id="3"]
+[ext_resource type="Shader" uid="uid://c0r7hx0eusne0" path="res://stylized_explosion_3d/explosion.gdshader" id="3"]
 [ext_resource type="Texture2D" uid="uid://b5te02213m88f" path="res://stylized_explosion_3d/ground_decal.png" id="4"]
 [ext_resource type="Texture2D" uid="uid://c8hi5nfr85gov" path="res://stylized_explosion_3d/blast.png" id="5"]
 [ext_resource type="Texture2D" uid="uid://jgdnwvnkv5l" path="res://stylized_explosion_3d/smooth_noise.png" id="6"]
-[ext_resource type="Shader" path="res://stylized_explosion_3d/blast.gdshader" id="7"]
-[ext_resource type="Shader" path="res://stylized_explosion_3d/shockwave.gdshader" id="8"]
+[ext_resource type="Shader" uid="uid://dwu1124ctfut5" path="res://stylized_explosion_3d/blast.gdshader" id="7"]
+[ext_resource type="Shader" uid="uid://bmha2ksflgkoi" path="res://stylized_explosion_3d/shockwave.gdshader" id="8"]
 
 [sub_resource type="Curve" id="9"]
 _data = [Vector2(0, 0.1), 0.0, 0.413057, 0, 0, Vector2(1, 0.981818), 1.56881, 0.0, 0, 0]
@@ -33,6 +33,8 @@ curve = SubResource("7")
 [sub_resource type="ShaderMaterial" id="2"]
 render_priority = 0
 shader = ExtResource("3")
+shader_parameter/erosion_texture = ExtResource("6")
+shader_parameter/pattern_texture = ExtResource("1")
 shader_parameter/erosion_smooth = 0.05
 shader_parameter/fire_smooth = 0.05
 shader_parameter/smoke_color = Color(0.290196, 0.290196, 0.290196, 1)
@@ -40,13 +42,11 @@ shader_parameter/emission_color = Color(1.8, 0.63, 0, 1)
 shader_parameter/uv_offset = 0.0
 shader_parameter/displacement = 0.25
 shader_parameter/movement_driver = 0.0
-shader_parameter/offset = 0.2
-shader_parameter/dissapation_offset = 0.2
-shader_parameter/erosion_texture = ExtResource("6")
-shader_parameter/pattern_texture = ExtResource("1")
 shader_parameter/movement_curve = SubResource("8")
 shader_parameter/fire_curve = SubResource("12")
 shader_parameter/erosion_curve = SubResource("10")
+shader_parameter/offset = 0.2
+shader_parameter/dissapation_offset = 0.2
 
 [sub_resource type="Animation" id="Animation_0dmeb"]
 resource_name = "Explosion"
@@ -356,17 +356,17 @@ tracks/14/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8pkac"]
 _data = {
-"Explosion": SubResource("Animation_0dmeb"),
-"RESET": SubResource("5")
+&"Explosion": SubResource("Animation_0dmeb"),
+&"RESET": SubResource("5")
 }
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_u415r"]
 render_priority = 0
 shader = ExtResource("8")
 shader_parameter/albedo = Color(2, 1, 0, 0)
+shader_parameter/noise_texture = ExtResource("6")
 shader_parameter/erosion = 0.46
 shader_parameter/erosion_width = 0.13
-shader_parameter/noise_texture = ExtResource("6")
 
 [sub_resource type="SphereMesh" id="13"]
 
@@ -374,9 +374,9 @@ shader_parameter/noise_texture = ExtResource("6")
 render_priority = 0
 shader = ExtResource("7")
 shader_parameter/albedo = Color(1, 1, 0.39, 1)
+shader_parameter/texture_blast = ExtResource("5")
 shader_parameter/width = 0.57
 shader_parameter/threshold = 0.27
-shader_parameter/texture_blast = ExtResource("5")
 
 [sub_resource type="QuadMesh" id="20"]
 size = Vector2(14, 14)

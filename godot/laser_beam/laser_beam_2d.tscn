@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://cb1jy3pa1b4tk"]
 
-[ext_resource type="Script" path="res://laser_beam/laser_beam_2d.gd" id="1"]
+[ext_resource type="Script" uid="uid://bnmokmk3eajbs" path="res://laser_beam/laser_beam_2d.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://t105tdvgunrx" path="res://assets/glowing_circle.png" id="2"]
 
 [sub_resource type="Gradient" id="1"]

@@ -158,10 +158,10 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_e1nlx"]
 _data = {
-"idle": SubResource("3"),
-"jump": SubResource("4"),
-"land": SubResource("5"),
-"walk": SubResource("6")
+&"idle": SubResource("3"),
+&"jump": SubResource("4"),
+&"land": SubResource("5"),
+&"walk": SubResource("6")
 }
 
 [sub_resource type="WorldBoundaryShape2D" id="7"]

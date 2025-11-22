@@ -110,7 +110,7 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_k0hia"]
 _data = {
-"Accelerate": SubResource("8")
+&"Accelerate": SubResource("8")
 }
 
 [node name="BlurTest" type="Node"]

@@ -14,11 +14,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
-
-/**
- * 管道类，负责流程调度和算子链管理
- * 支持链式调用添加算子，并按顺序执行算子链
- * 支持生命周期管理、性能指标收集和批次拆分
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -26,6 +21,7 @@ import java.util.Objects;
 /**
  * 管道类，负责流程调度和算子链管理
  * 支持链式调用添加算子，并按顺序执行算子链
+ * 支持生命周期管理、性能指标收集和批次拆分
  * 
  * @param <I> 初始输入数据类型
  * @param <O> 最终输出数据类型

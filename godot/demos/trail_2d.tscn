@@ -1,12 +1,12 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=4 format=3 uid="uid://cifbd28udywbk"]
 
-[ext_resource path="res://addons/node-essential-helpers/demo_screen_slide.gd" type="Script" id=1]
-[ext_resource path="res://addons/node-essential-helpers/scene_slideshow.gd" type="Script" id=2]
-[ext_resource path="res://screens/trail_2d_demo.tscn" type="PackedScene" id=3]
+[ext_resource type="Script" uid="uid://dji6qpdrc4j28" path="res://addons/node-essential-helpers/demo_screen_slide.gd" id="1"]
+[ext_resource type="Script" uid="uid://dagepl67eb7or" path="res://addons/node-essential-helpers/scene_slideshow.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://b34vq08qclndj" path="res://screens/trail_2d_demo.tscn" id="3"]
 
 [node name="Trail2D" type="Node2D"]
-script = ExtResource( 2 )
+script = ExtResource("2")
 
 [node name="Trail2DDemo" type="Node2D" parent="."]
-script = ExtResource( 1 )
-scene = ExtResource( 3 )
+script = ExtResource("1")
+scene = ExtResource("3")

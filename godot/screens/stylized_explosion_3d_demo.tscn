@@ -322,8 +322,8 @@ tracks/14/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1fsev"]
 _data = {
-"Explosion": SubResource("Animation_0dmeb"),
-"RESET": SubResource("5")
+&"Explosion": SubResource("Animation_0dmeb"),
+&"RESET": SubResource("5")
 }
 
 [node name="StylizedExplosion3DDemo" type="Node3D"]
